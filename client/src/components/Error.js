@@ -1,12 +1,12 @@
 import React from "react";
 import Alert from "react-bootstrap/Alert";
 
-function Error() {
+function Error({ message }) {
   return (
     <div>
       {" "}
       <Alert key="danger" variant="danger">
-        Something went wrong, please try again later!
+        {message}
       </Alert>
     </div>
   );

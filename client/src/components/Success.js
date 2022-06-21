@@ -1,11 +1,11 @@
 import React from "react";
 import Alert from "react-bootstrap/Alert";
 
-function Success() {
+function Success({ message }) {
   return (
     <div>
       <Alert key="success" variant="success">
-        Successfull
+        {message}
       </Alert>
     </div>
   );
