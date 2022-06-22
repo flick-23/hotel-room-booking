@@ -15,6 +15,8 @@ function Homescreen() {
   const [fromDate, setFromDate] = useState();
   const [toDate, setToDate] = useState();
   const [duplicateRooms, setDuplicateRooms] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,7 +24,7 @@ function Homescreen() {
         setLoading(true);
         const data = (await axios.get("/api/rooms/getAllRooms")).data;
         setRooms(data.rooms);
-        setDuplicateRooms(data);
+        setDuplicateRooms(data.rooms);
         setError(false);
         setLoading(false);
       } catch (e) {
@@ -66,19 +68,64 @@ function Homescreen() {
         tempRooms.push(room);
       }
     }
+    setRooms(tempRooms);
+  };
+
+  const filterBySearch = () => {
+    const tempRooms = duplicateRooms.filter((room) =>
+      room.name.toLowerCase().includes(searchKey.toLowerCase())
+    );
+    setRooms(tempRooms);
+  };
+
+  const filterByType = (e) => {
+    setType(e);
+    if (e != "all") {
+      const tempRooms = duplicateRooms.filter(
+        (room) => room.type.toLowerCase() === e.toLowerCase()
+      );
+      setRooms(tempRooms);
+    } else {
+      setRooms(duplicateRooms);
+    }
   };
 
   return (
     <div className="container">
-      <div className="row mt-5">
+      <div className="row mt-5 bs">
         <div className="col-md-3">
           <RangePicker format="DD-MM-YYYY" onChange={filterByDate} />
+        </div>
+
+        <div className="col-md-5">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search Rooms"
+            value={searchKey}
+            onChange={(e) => {
+              setSearchKey(e.target.value);
+            }}
+            onKeyUp={filterBySearch}
+          />
+        </div>
+
+        <div className="col-md-3">
+          <select
+            className="form-control"
+            value={type}
+            onChange={(e) => filterByType(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="delux">Deluxe</option>
+            <option value="non-delux">Non-Deluxe</option>
+          </select>
         </div>
       </div>
       <div className="row justify-content-center mt-5">
         {loading ? (
           <Loader />
-        ) : rooms.length > 1 ? (
+        ) : (
           rooms.map((room) => {
             return (
               <div className="col-md-9 mt-2">
@@ -86,8 +133,6 @@ function Homescreen() {
               </div>
             );
           })
-        ) : (
-          <Error />
         )}
       </div>
     </div>
