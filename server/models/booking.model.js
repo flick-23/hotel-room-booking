@@ -11,7 +11,7 @@ const bookingSchema = mongoose.Schema(
       required: true,
     },
     userid: {
-      String,
+      type:String,
       required: true,
     },
     fromDate: {
