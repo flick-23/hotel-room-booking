@@ -16,6 +16,7 @@ function Bookingscreen() {
   const toDate = moment(params.toDate, "DD-MM-YYYY");
 
   const totalDays = moment.duration(toDate.diff(fromDate)).asDays() + 1;
+  const totalAmount = totalDays * room.rentperday;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +62,7 @@ function Bookingscreen() {
                 <hr />
                 <b>
                   <p>Total days : {totalDays} </p>
-                  <p>Rent per day : </p>
+                  <p>Rent per day : {totalAmount}</p>
                   <p>Total Amount : </p>
                 </b>
               </div>
