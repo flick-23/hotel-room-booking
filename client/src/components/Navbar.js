@@ -7,7 +7,7 @@ export default function Navbar() {
     <div>
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="home">
             Hotel Rooms
           </a>
           <button
@@ -33,7 +33,7 @@ export default function Navbar() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="/bookings">Bookings</Dropdown.Item>
+                      <Dropdown.Item href="/profile">Profile</Dropdown.Item>
                       <Dropdown.Item
                         href="#/action-2"
                         onClick={() => {

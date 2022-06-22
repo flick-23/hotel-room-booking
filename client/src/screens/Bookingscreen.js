@@ -22,10 +22,15 @@ function Bookingscreen() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!localStorage.getItem("currentUser")) {
+        window.location.reload = "/login";
+      }
       try {
         setLoading(true);
         const data = (
-          await axios.post("/api/rooms/getRoomsById", { roomid: params.roomid })
+          await axios.post("/api/rooms/getRoomsById", {
+            roomid: params.roomid,
+          })
         ).data;
         setTotalAmount(totalDays * data.rentperday);
         setRoom(data);
@@ -60,7 +65,7 @@ function Bookingscreen() {
         "Your room is booked successfully!",
         "success"
       ).then((result) => {
-        window.location.href = "/bookings";
+        window.location.href = "/profile";
       });
     } catch (e) {
       setLoading(false);
@@ -98,8 +103,8 @@ function Bookingscreen() {
                 <hr />
                 <b>
                   <p>Total days : {totalDays} </p>
-                  <p>Rent per day : {totalAmount}</p>
-                  <p>Total Amount : </p>
+                  <p>Rent per day : {room.rentperday}</p>
+                  <p>Total Amount : {totalAmount} </p>
                 </b>
               </div>
               <div style={{ float: "right" }}>
