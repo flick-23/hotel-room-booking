@@ -33,7 +33,7 @@ export default function Navbar() {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="book">Bookings</Dropdown.Item>
+                      <Dropdown.Item href="/bookings">Bookings</Dropdown.Item>
                       <Dropdown.Item
                         href="#/action-2"
                         onClick={() => {
