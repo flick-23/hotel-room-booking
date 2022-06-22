@@ -32,4 +32,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/getallusers", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.send(users);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
+
 module.exports = router;
