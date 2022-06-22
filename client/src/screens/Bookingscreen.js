@@ -4,6 +4,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import moment from "moment";
+import StripeCheckout from "react-stripe-checkout";
 
 function Bookingscreen() {
   const [loading, setLoading] = useState(true);
@@ -37,13 +38,16 @@ function Bookingscreen() {
     fetchData();
   }, []);
 
-  const bookRoom = async () => {
+  const bookRoom = async () => {};
+
+  const onToken = async (token) => {
     const bookingDetails = {
       room,
       userid: JSON.parse(localStorage.getItem("currentUser"))._id,
       fromDate,
       toDate,
       totalAmount,
+      token,
       totalDays,
     };
     try {
@@ -87,9 +91,14 @@ function Bookingscreen() {
                 </b>
               </div>
               <div style={{ float: "right" }}>
-                <button className="btn btn-primary" onClick={bookRoom}>
-                  Pay Now
-                </button>
+                <StripeCheckout
+                  amount={totalAmount * 100}
+                  token={onToken}
+                  currency="INR"
+                  stripeKey="pk_test_51LDTa1SGuzP037r7qtpq0DuBN51knDJeW9PCmCprzpGlMu6LXMEI2aNRdnvoT2VFNtQ1EDIiOsofuoTKqMXgiMQL00XjnhmeXZ"
+                >
+                  <button className="btn btn-primary">Pay Now</button>
+                </StripeCheckout>
               </div>
             </div>
           </div>
