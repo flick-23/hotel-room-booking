@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
+import swal from "sweetalert";
 
 const { TabPane } = Tabs;
 
@@ -32,7 +33,7 @@ function Adminscreen() {
           <Rooms />
         </TabPane>
         <TabPane tab="Add Room" key="3">
-          Add Room
+          <AddRoom />
         </TabPane>
         <TabPane tab="Users" key="4">
           <User />
@@ -44,6 +45,7 @@ function Adminscreen() {
 
 export default Adminscreen;
 
+// Bookings component
 export function Bookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -107,6 +109,7 @@ export function Bookings() {
   );
 }
 
+// Rooms component
 export function Rooms() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -168,6 +171,7 @@ export function Rooms() {
   );
 }
 
+// Users component
 export function User() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -220,6 +224,129 @@ export function User() {
               })}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+//adding rooms component
+export function AddRoom() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+  const [name, setName] = useState("");
+  const [rentperday, setRentperday] = useState("");
+  const [maxcount, setMaxCount] = useState();
+  const [description, setDescription] = useState();
+  const [phonenumber, setPhoneNumber] = useState();
+  const [type, setType] = useState();
+  const [imageUrl1, setImageUrl1] = useState();
+  const [imageUrl2, setImageUrl2] = useState();
+  const [imageUrl3, setImageUrl3] = useState();
+
+  const addRoom = async () => {
+    const newRoom = {
+      name,
+      rentperday,
+      maxcount,
+      description,
+      phonenumber,
+      type,
+      imageurls: [imageUrl1, imageUrl2, imageUrl3],
+    };
+    try {
+      setLoading(true);
+      const result = await (
+        await axios.post("/api/rooms/addRoom", newRoom)
+      ).data;
+      console.log("Result: ", result);
+      setLoading(false);
+      swal("Congratulations!", "New Room added successfully!", "success").then(
+        (result) => {
+          window.location.href = "/home";
+        }
+      );
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      setError(error);
+      swal("Error!", "Something went wrong!", "error");
+    }
+  };
+
+  return (
+    <div className="row">
+      <div className=" col-md-5">
+        {loading && <Loader />}
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          type="text"
+          className="form-control mt-1"
+          placeholder="Room Name"
+        />
+        <input
+          value={rentperday}
+          onChange={(e) => setRentperday(e.target.value)}
+          type="number"
+          className="form-control mt-2"
+          placeholder="Rent Per Day"
+        />
+        <input
+          value={maxcount}
+          onChange={(e) => setMaxCount(e.target.value)}
+          type="number"
+          className="form-control mt-2"
+          placeholder="Max Count"
+        />
+        <input
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          type="text"
+          className="form-control mt-2"
+          placeholder="Description"
+        />
+        <input
+          value={phonenumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          type="number"
+          className="form-control mt-2"
+          placeholder="Phone Number"
+        />
+      </div>
+      <div className="col-md-5">
+        <input
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          type="text"
+          className="form-control mt-1"
+          placeholder="Type"
+        />
+        <input
+          value={imageUrl1}
+          onChange={(e) => setImageUrl1(e.target.value)}
+          type="text"
+          className="form-control mt-2"
+          placeholder="Image URL 1"
+        />
+        <input
+          value={imageUrl2}
+          onChange={(e) => setImageUrl2(e.target.value)}
+          type="text"
+          className="form-control mt-2"
+          placeholder="Image URL 2"
+        />
+        <input
+          value={imageUrl3}
+          onChange={(e) => setImageUrl3(e.target.value)}
+          type="text"
+          className="form-control mt-2"
+          placeholder="Image URL 3"
+        />
+        <div className="text-right mt-2" style={{ textAlign: "right" }}>
+          <button onClick={addRoom} className="btn btn-primary">
+            Add Room
+          </button>
+        </div>
       </div>
     </div>
   );
