@@ -6,6 +6,9 @@ import Error from "../components/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
 import swal from "sweetalert";
+import "aos/dist/aos.css";
+import AOS from "aos";
+AOS.init({ duration: "1000" });
 
 function Bookingscreen() {
   const [loading, setLoading] = useState(true);
@@ -23,7 +26,7 @@ function Bookingscreen() {
   useEffect(() => {
     const fetchData = async () => {
       if (!localStorage.getItem("currentUser")) {
-        window.location.reload = "/login";
+        window.location.href = "/login";
       }
       try {
         setLoading(true);
@@ -75,7 +78,7 @@ function Bookingscreen() {
   };
 
   return (
-    <div className="m-5">
+    <div className="m-5" data-aos="flip-left">
       {loading ? (
         <Loader />
       ) : room ? (

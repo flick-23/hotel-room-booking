@@ -3,6 +3,8 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 import Success from "./../components/Success";
+import AOS from "aos";
+import "aos/dist/aos.css"; // You can also use <link> for styles
 
 function Registerscreen() {
   const [name, setName] = useState("");
@@ -52,28 +54,28 @@ function Registerscreen() {
             <h2>Register</h2>
             <input
               type="text"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></input>
             <input
               type="email"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             ></input>
             <input
               type="password"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
             <input
               type="password"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Confrim Password"
               value={cpassword}
               onChange={(e) => setCPassword(e.target.value)}

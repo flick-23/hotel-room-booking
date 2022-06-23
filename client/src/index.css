@@ -79,3 +79,11 @@ h2{
 p{
   font-size: 15px !important;
 }
+.landing{
+  background-color: #000 !important;
+  color: white !important;
+  height: 100vh;
+}
+.landingbtn{
+  color: black;background: white; margin-top: 20px;
+}

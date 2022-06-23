@@ -38,20 +38,23 @@ function Loginscreen() {
 
             <input
               type="email"
-              className="form-control"
+              className="form-control mt-2"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             ></input>
             <input
               type="password"
-              className="form-control"
+              className="form-control  mt-2"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
 
-            <button className="btn btn-primary  mt-3" onClick={login}>
+            <button
+              className="btn btn-primary justify-content-center mt-3"
+              onClick={login}
+            >
               Login
             </button>
           </div>
